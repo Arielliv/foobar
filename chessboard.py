@@ -27,19 +27,19 @@ def calc_points_as_matrix(src, dest, row_size, col_size):
 
 def getPossibleMovements(src_pos, dest_pos):
     res = []
-    res.append({"x": src_pos["y"] - 1, "y": src_pos["x"] - 2})  # NW
-    res.append({"x": src_pos["y"] + 1, "y": src_pos["x"] - 2})  # NE
-    res.append({"x": src_pos["y"] - 1, "y": src_pos["x"] + 2})  # SW
-    res.append({"x": src_pos["y"] + 1, "y": src_pos["x"] + 2})  # SE
-    res.append({"x": src_pos["y"] + 2, "y": src_pos["x"] - 1})  # EN
-    res.append({"x": src_pos["y"] + 2, "y": src_pos["x"] + 1})  # ES
-    res.append({"x": src_pos["y"] - 2, "y": src_pos["x"] - 1})  # WN
-    res.append({"x": src_pos["y"] - 2, "y": src_pos["x"] + 1})  # WS
+    res.append({"x": src_pos["y"] - 1, "y": src_pos["x"] - 2})
+    res.append({"x": src_pos["y"] + 1, "y": src_pos["x"] - 2})
+    res.append({"x": src_pos["y"] - 1, "y": src_pos["x"] + 2})
+    res.append({"x": src_pos["y"] + 1, "y": src_pos["x"] + 2})
+    res.append({"x": src_pos["y"] + 2, "y": src_pos["x"] - 1})
+    res.append({"x": src_pos["y"] + 2, "y": src_pos["x"] + 1})
+    res.append({"x": src_pos["y"] - 2, "y": src_pos["x"] - 1})
+    res.append({"x": src_pos["y"] - 2, "y": src_pos["x"] + 1})
 
     for p in res:
-        if (p["y"] < 0 or p["y"] > current_col_size-1 or p["x"] < 0 or p["x"] > current_row_size-1):
+        if p["y"] < 0 or p["y"] > current_col_size - 1 or p["x"] < 0 or p["x"] > current_row_size - 1:
             res.remove(p)
-        elif (p["y"] == dest_pos["y"] and p["x"] == dest_pos["x"]):
+        elif p["y"] == dest_pos["y"] and p["x"] == dest_pos["x"]:
             return None
 
     return res
@@ -52,16 +52,15 @@ def count_number_of_min_steps_to_win(current_point, dest_point):
     if moves == None:
         return level
     while True:
-        level+=1
+        level += 1
 
         for move in moves:
-            nextMoves = getPossibleMovements(move,dest_point)
-            if(nextMoves == None):
+            nextMoves = getPossibleMovements(move, dest_point)
+            if (nextMoves == None):
                 return level
             bufferNextLevelMoves.extend(nextMoves)
         moves = bufferNextLevelMoves
         bufferNextLevelMoves = []
-
 
 # -------------------------
 # | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
