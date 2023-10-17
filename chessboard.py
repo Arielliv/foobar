@@ -18,49 +18,47 @@ def calc_points_as_matrix(src, dest, row_size, col_size):
     for x in range(0, row_size):
         for y in range(0, col_size):
             if counter == src:
-                start_point = {"x": x, "y": y}
+                start_point = (x, y)
             elif counter == dest:
-                dest_point = {"x": x, "y": y}
+                dest_point = (x, y)
             counter += 1
     return {"start_point": start_point, "dest_point": dest_point}
 
 
 def getPossibleMovements(src_pos, dest_pos):
     res = []
-    res.append({"x": src_pos["y"] - 1, "y": src_pos["x"] - 2})
-    res.append({"x": src_pos["y"] + 1, "y": src_pos["x"] - 2})
-    res.append({"x": src_pos["y"] - 1, "y": src_pos["x"] + 2})
-    res.append({"x": src_pos["y"] + 1, "y": src_pos["x"] + 2})
-    res.append({"x": src_pos["y"] + 2, "y": src_pos["x"] - 1})
-    res.append({"x": src_pos["y"] + 2, "y": src_pos["x"] + 1})
-    res.append({"x": src_pos["y"] - 2, "y": src_pos["x"] - 1})
-    res.append({"x": src_pos["y"] - 2, "y": src_pos["x"] + 1})
+    res.append((src_pos[0] - 1, src_pos[1] - 2))
+    res.append((src_pos[0] + 1, src_pos[1] - 2))
+    res.append((src_pos[0] - 1, src_pos[1] + 2))
+    res.append((src_pos[0] + 1, src_pos[1] + 2))
+    res.append((src_pos[0] + 2, src_pos[1] - 1))
+    res.append((src_pos[0] + 2, src_pos[1] + 1))
+    res.append((src_pos[0] - 2, src_pos[1] - 1))
+    res.append((src_pos[0] - 2, src_pos[1] + 1))
 
+    possible_moves = []
     for p in res:
-        if p["y"] < 0 or p["y"] > current_col_size - 1 or p["x"] < 0 or p["x"] > current_row_size - 1:
-            res.remove(p)
-        elif p["y"] == dest_pos["y"] and p["x"] == dest_pos["x"]:
-            return None
-
-    return res
+        if (0 <= p[1] < current_col_size and 0 <= p[0] < current_row_size):
+            possible_moves.append(p)
+    return possible_moves
 
 
 def count_number_of_min_steps_to_win(current_point, dest_point):
-    level = 1
-    bufferNextLevelMoves = []
-    moves = getPossibleMovements(current_point, dest_point)
-    if moves == None:
-        return level
-    while True:
-        level += 1
+    visited = set()
+    moves = [(current_point, 0)]
 
-        for move in moves:
-            nextMoves = getPossibleMovements(move, dest_point)
-            if (nextMoves == None):
-                return level
-            bufferNextLevelMoves.extend(nextMoves)
-        moves = bufferNextLevelMoves
-        bufferNextLevelMoves = []
+    while moves:
+        current_pos, steps = moves.pop(0)
+
+        if current_pos == dest_point:
+            return steps
+
+        for move in getPossibleMovements(current_pos, dest_point):
+            move_tuple = (move[0], move[1])
+            if move_tuple not in visited:
+                visited.add(move_tuple)
+                moves.append((move, steps + 1))
+    return max_int
 
 # -------------------------
 # | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
