@@ -2,7 +2,8 @@
 # from chessboard import answer
 # from route_salute import answer
 # from fuel_injection import answer
-from bomb import answer
+# from bomb import answer
+from access_code import answer
 
 if __name__ == '__main__':
     # 1
@@ -14,4 +15,6 @@ if __name__ == '__main__':
     # 3.1
     # print(answer("855"))
     # 3.2
-    print(answer("14", "17"))
+    # print(answer("14", "17"))
+    # 3.3
+    print(answer([1, 2, 3, 4, 5, 6]))
