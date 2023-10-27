@@ -14,4 +14,4 @@ if __name__ == '__main__':
     # 3.1
     # print(answer("855"))
     # 3.2
-    print(answer(4, 7))
+    print(answer("14", "17"))
