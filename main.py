@@ -3,7 +3,8 @@
 # from route_salute import answer
 # from fuel_injection import answer
 # from bomb import answer
-from access_code import answer
+# from access_code import answer
+from bunny_prison import answer
 
 if __name__ == '__main__':
     # 1
@@ -17,4 +18,6 @@ if __name__ == '__main__':
     # 3.2
     # print(answer("14", "17"))
     # 3.3
-    print(answer([1, 2, 3, 4, 5, 6]))
+    # print(answer([1, 2, 3, 4, 5, 6]))
+    # 4.1
+    print(answer(5, 3))
