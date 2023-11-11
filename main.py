@@ -4,7 +4,8 @@
 # from fuel_injection import answer
 # from bomb import answer
 # from access_code import answer
-from bunny_prison import answer
+# from bunny_prison import answer
+from running_bunnies import answer
 
 if __name__ == '__main__':
     # 1
@@ -20,6 +21,23 @@ if __name__ == '__main__':
     # 3.3
     # print(answer([1, 2, 3, 4, 5, 6]))
     # 4.1
-    print(answer(2, 1))
-    print(answer(5, 3))
-    print(answer(4, 4))
+    # print(answer(2, 1))
+    # print(answer(5, 3))
+    # print(answer(4, 4))
+    # 4.2
+    times = [
+        [0, 1, 1, 1, 1],
+        [1, 0, 1, 1, 1],
+        [1, 1, 0, 1, 1],
+        [1, 1, 1, 0, 1],
+        [1, 1, 1, 1, 0]
+    ]
+    print(answer(times,3))
+    times = [
+                    [0, 2, 2, 2, -1],
+                    [9, 0, 2, 2, -1],
+                    [9, 3, 0, 2, -1],
+                    [9, 3, 2, 0, -1],
+                    [9, 3, 2, 2, 0]
+                  ]
+    print(answer(times, 1))
