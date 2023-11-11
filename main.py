@@ -20,4 +20,6 @@ if __name__ == '__main__':
     # 3.3
     # print(answer([1, 2, 3, 4, 5, 6]))
     # 4.1
+    print(answer(2, 1))
     print(answer(5, 3))
+    print(answer(4, 4))
