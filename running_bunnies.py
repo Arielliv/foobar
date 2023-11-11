@@ -1,316 +1,152 @@
-from typing import List, Tuple
-from queue import Queue
-from itertools import count
+import copy
 
 
-class GraphNode:
-    def __init__(self, vertex_name, capacity, flow):
-        self.vertex_name = vertex_name
-        self.capacity = capacity
-        self.flow = flow
-
-    def __eq__(self, other):
-        return self.vertex_name == other.vertex_name
-
-    def __lt__(self, other):
-        return self.vertex_name < other.vertex_name
-
-
-class Vertex:
-    def __init__(self, vertex_name, graph_nodes=None):
-        self.vertex_name = vertex_name
-        self.l = graph_nodes if graph_nodes is not None else []
-
-    def get_vertex_name(self):
-        return self.vertex_name
-
-    def add_edge(self, v, c):
-        if self.check_if_edge_exists(v):
-            for graph_node in self.l:
-                if graph_node.vertex_name == v:
-                    graph_node.capacity += c
-                    return
-        else:
-            self.l.append(GraphNode(v, c, 0))
-
-    def add_flow(self, v, f):
-        if not self.check_if_edge_exists(v):
-            for graph_node in self.l:
-                if graph_node.vertex_name == v:
-                    graph_node.flow = graph_node.capacity + f
-                    return
-        else:
-            self.find_edge(v).flow = f
-
-    def remove_edge(self, v):
-        if not self.check_if_edge_exists(v):
-            raise ValueError("Edge doesn't exist")
-        else:
-            self.l.remove(self.find_edge(v))
-
-    def get_adj_full_list(self):
-        temp_list = sorted(self.l)
-        return temp_list
-
-    def get_adj_list(self):
-        return [graph_node.vertex_name for graph_node in self.get_adj_full_list()]
-
-    def print_adj_list(self):
-        for graph_node in self.get_adj_full_list():
-            print(graph_node)
-
-    def find_edge(self, v):
-        for graph_node in self.l:
-            if graph_node.vertex_name == v:
-                return graph_node
-
-    def check_if_edge_exists(self, v):
-        return any(graph_node.vertex_name == v for graph_node in self.l)
-
-    def get_capacity(self, v):
-        if not self.check_if_edge_exists(v):
-            raise ValueError(f"getCapacity error: {self.get_vertex_name()} and vertex: {v} tried to getCapacity")
-        return self.find_edge(v).capacity
-
-    def get_flow(self, v):
-        return self.find_edge(v).flow
-
-    def __eq__(self, other):
-        return self.vertex_name == other.vertex_name
-
-    def __copy__(self):
-        return Vertex(self.vertex_name, self.l.copy())
-
-
-class GraphNode:
-    def __init__(self, vertex_name, capacity, flow):
-        self.vertex_name = vertex_name
-        self.capacity = capacity
-        self.flow = flow
-
-    def get_vertex_name(self):
-        return self.vertex_name
-
-    def get_capacity(self):
-        return self.capacity
-
-    def get_flow(self):
-        return self.flow
-
-    def set_vertex_name(self, vertex_name):
-        self.vertex_name = vertex_name
-
-    def set_capacity(self, capacity):
-        self.capacity = capacity
-
-    def set_flow(self, flow):
-        self.flow += flow
-
-    def __lt__(self, other):
-        return self.capacity < other.capacity
-
-    def __gt__(self, other):
-        return self.capacity > other.capacity
-
-    def __eq__(self, other):
-        if isinstance(other, int):
-            return self.vertex_name == other
-        elif isinstance(other, GraphNode):
-            return self.vertex_name == other.vertex_name
-
-    def __le__(self, other):
-        return self.capacity <= other.capacity
-
-    def __ge__(self, other):
-        return self.capacity >= other.capacity
-
-    def __str__(self):
-        return f"Vertex Name: {self.get_vertex_name()} Capacity: {self.get_capacity()} Flow: {self.get_flow()}"
-
-
-class ShorterRouteNode:
-    def __init__(self, vertex_name=None, parent=None, level=None):
-        self.vertex_name = vertex_name
-        self.parent = parent
-        self.level = level
-
-    def get_vertex_name(self):
-        return self.vertex_name
-
-    def get_parent(self):
-        return self.parent
-
-    def get_level(self):
-        return self.level
-
-    def set_vertex_name(self, vertex_name):
-        self.vertex_name = vertex_name
-
-    def set_parent(self, parent):
-        self.parent = parent
-
-    def set_level(self, level):
-        self.level = level
-
-    def __lt__(self, other):
-        return self.level < other.level
-
-    def __gt__(self, other):
-        return self.level > other.level
-
-    def __eq__(self, other):
-        return self.level == other.level
-
-
+# Graph API:
+#   iter(graph) gives all nodes
+#   iter(graph[u]) gives neighbours of u
+#   graph[u][v] gives weight of edge (u, v)
 class Graph:
-    def __init__(self, n):
-        self.make_empty_graph(n)
 
-    def make_empty_graph(self, n):
-        self.g = [Vertex(i, []) for i in range(n + 1)]
-        self.l_size = n
+    def __init__(self, square_matrix):
+        self.graph = square_matrix
+        self.V = len(square_matrix)  # No. of vertices
 
-    @classmethod
-    def from_adjacency_matrix(cls, adj_matrix: List[List[int]]):
-        n = len(adj_matrix)
-        graph = cls(n)
+        # Initialize distances from src to all other vertices as INFINITE
+        # so, start admiting that the rest of nodes are very very far
+        self.INF = float("Inf")
+        self.distances = [[self.INF for _ in range(self.V)] for _ in range(self.V)]
+        self.parents = [[None for _ in range(self.V)] for _ in range(self.V)]
+        # self.shortestPath = [[None for _ in xrange(self.V)] for _ in xrange(self.V)]
 
-        for i in range(n):
-            for j in range(n):
-                graph.add_edge(i, j, adj_matrix[i][j])  # Assuming the matrix is 0-indexed
+    def relax(self, src, u, v):
+        if self.distances[src][u] != self.INF and self.distances[src][v] > self.distances[src][u] + self.graph[u][v]:
+            self.distances[src][v] = self.distances[src][u] + self.graph[u][v]
+            self.parents[src][v] = u
 
-        return graph
+    # The main function that finds shortest distances from src to
+    # all other vertices using Bellman-Ford algorithm.  The function
+    # also detects negative weight cycle
 
-    def get_adj_list(self, u):
-        return self.g[u].get_adj_list()
+    def BellmanFord(self, src):
+        # keep lower distances from source to another vertexes
+        self.distances[src][src] = 0
 
-    def get_adj_full_list(self, u):
-        return self.g[u].get_adj_full_list()
+        # Relax all edges |V| - 1 times. A simple shortest
+        # path from src to any other vertex can have at-most |V| - 1 edges
+        for _ in range(self.V - 1):  # Run this until is converges
+            # Update dist value and parent index of the adjacent vertices of
+            # the picked vertex. Consider only those vertices which are still in queue
+            for u in range(self.V):
+                for v in range(self.V):
+                    self.relax(src, u, v)
+                    # if self.distances[src][u] != self.INF and self.distances[src][u] + self.graph[u][v] < \
+                    #         self.distances[src][v]:
+                    #     # Record this lower distance
+                    #     self.distances[src][v] = self.distances[src][u] + self.graph[u][v]
+                    #     # self.shortestPath[src][v] = v if src == u else u
 
-    def add_edge(self, u, v, c):
-        self.g[u].add_edge(v, c)
+        # Check for negative-weight cycles.  The above step
+        # guarantees shortest distances if graph doesn't contain
+        # negative weight cycle. If we get a shorter path, then there is a cycle.
+        for u in range(self.V):
+            for v in range(self.V):
+                if self.distances[src][u] != self.INF and self.distances[src][u] + self.graph[u][v] < \
+                        self.distances[src][v]:
+                    print("Graph contains negative weight cycle")
+                    return False
 
-    def add_flow(self, u, v, f):
-        if not self.g[u].check_if_edge_exists(v):
-            self.g[u].add_edge(v, f)
-        elif self.g[u].get_capacity(v) < f:
-            error = f"Error in add flow of vertex: {u} and vertex: {v}. Tried to add flow of: {f} to capacity: {self.g[u].get_capacity(v)}"
-            raise ValueError(error)
-        else:
-            self.g[u].add_flow(v, f)
+        return True
 
-    def remove_edge(self, u, v):
-        self.g[u].remove_edge(v)
+    # The Bellman-Ford's complete sources algorithm.
+    # Shortest path from all to all points
+    def BellmanFordCompleteSource(self):
+        for v in range(self.V):
+            if not self.BellmanFord(v):
+                return False
+        return True
 
-    def print_graph(self):
-        for vertex in self.g:
-            print(f"Vertex Name: {vertex.get_vertex_name()} {{")
-            vertex.print_adj_list()
-            print("}}")
+    def get_paths(self, start, goal, time):
+        all_paths = []  # Collect all paths here
+        # Initialize the stack with the starting vertex, its path, remaining time, and cycle factor vertices
+        stack = [(start, [start], time, [[i] for i in range(self.V)])]
+        child_vertices = set(range(self.V))
 
-    def get_residual_graph(self):
-        result = Graph(self.l_size)
+        while stack:
+            current_vertex, path, remaining_time, cycle_factor_vertices = stack.pop()
 
-        for u in range(0, self.l_size):
-            temp_list = self.g[u].get_adj_full_list()
-            for v in temp_list:
-                f = v.get_flow()
-                cf = v.get_capacity() - f
-                if cf > 0:
-                    result.g[u].add_edge(v.get_vertex_name(), v.get_capacity() - v.get_flow())
-                if f > 0:
-                    result.g[v.get_vertex_name()].add_edge(u, v.get_flow())
+            for next_vertex in child_vertices - set(cycle_factor_vertices[current_vertex]):
+                # Calculate times to the next vertex and relevant points
+                time_to_next = self.distances[current_vertex][next_vertex]
+                time_to_goal_from_next = self.distances[next_vertex][goal]
+                time_to_back_from_next = self.distances[next_vertex][current_vertex]
 
-        return result
+                next_cycle_factor_vertices = copy.deepcopy(cycle_factor_vertices)
 
-    def get_v_size(self):
-        return self.l_size
+                # Check for a zero-cost cycle to block
+                if time_to_back_from_next + time_to_next == 0:
+                    next_cycle_factor_vertices[current_vertex].append(next_vertex)
+                    next_cycle_factor_vertices[next_vertex].append(current_vertex)
 
-    def get_vector_vertex(self):
-        return self.g
+                # Check if it's possible to go to the next vertex and then reach the goal within the remaining time
+                if 0 <= remaining_time - time_to_next - time_to_goal_from_next:
+                    # Update the path and remaining time
+                    next_path = path + [next_vertex]
+                    next_remaining_time = remaining_time - time_to_next
 
-    def get_capacity(self, u, v):
-        return self.g[u].get_capacity(v)
+                    # Add the next state to the stack
+                    stack.append((next_vertex, next_path, next_remaining_time, next_cycle_factor_vertices))
 
-    def get_flow(self, s):
-        count = 0
-        temp_list = self.g[s].get_adj_full_list()
-        for node in temp_list:
-            count += node.get_flow()
+                    # Check if the goal is reached and yield the set of freed bunnies
+                    if next_vertex == goal:
+                        freed_bunnies = set(next_path)
+                        all_paths.append(freed_bunnies)
 
-        return count
+                        # If all bunnies are freed, terminate the search
+                        if len(freed_bunnies) == self.V:
+                            return all_paths
+        return all_paths
 
 
-class BFSSolution:
-    def __init__(self):
-        pass
+def get_freed_bunnies(max_freed_bunnies, start_vertex, end_vertex):
+    # Remove start and end vertices
+    bunnies_set = max_freed_bunnies - set([start_vertex, end_vertex])
 
-    def run(self, g, s, t):
-        residual_graph = g.get_residual_graph()
-        bfs_result = self.bfs(residual_graph, s)
-        cur = ShorterRouteNode()
-        while self.get_ancestor_parent(bfs_result, t) == s:
-            min_capacity = self.get_min_capacity_in_route(residual_graph, bfs_result, t)
-            cur = bfs_result[t]
-            parent = cur.get_parent()
-            while cur.get_vertex_name() != s:
-                g.add_flow(parent, cur.get_vertex_name(), min_capacity)
-                cur = bfs_result[parent]
-                parent = cur.get_parent()
+    # Sort the set in ascending order
+    sorted_bunnies = sorted(bunnies_set)
 
-            residual_graph = g.get_residual_graph()
-            bfs_result = self.bfs(residual_graph, s)
+    # Subtract 1 from each element
+    adjusted_bunnies = [bunny - 1 for bunny in sorted_bunnies]
 
-        return g
-
-    def get_ancestor_parent(self, bfs_result, u):
-        cur = u
-        parent = bfs_result[u].get_parent()
-        while parent != -1:
-            cur = parent
-            parent = bfs_result[parent].get_parent()
-        return cur
-
-    def bfs(self, g, s):
-        bfs_queue = Queue()
-        v_result = [ShorterRouteNode(vertex.get_vertex_name(), -1, float('inf')) for vertex in g.get_vector_vertex()]
-
-        bfs_queue.put(g.get_vector_vertex()[s])
-        v_result[s].set_level(0)
-
-        while not bfs_queue.empty():
-            u = bfs_queue.get()
-            temp_list = u.get_adj_full_list()
-
-            for v in temp_list:
-                if v_result[v.get_vertex_name()].get_level() == float('inf'):
-                    v_result[v.get_vertex_name()].set_level(v_result[u.get_vertex_name()].get_level() + 1)
-                    v_result[v.get_vertex_name()].set_parent(u.get_vertex_name())
-                    bfs_queue.put(g.get_vector_vertex()[v.get_vertex_name()])
-
-        return v_result
-
-    @staticmethod
-    def sort_bfs_list(bfs_list):
-        bfs_list.sort(key=lambda x: x.get_level())
-
-    def get_min_capacity_in_route(self, g, bfs_result, u):
-        parent = bfs_result[u].get_parent()
-        min_capacity = g.get_capacity(parent, u)
-        cur = u
-        cur_capacity = min_capacity
-
-        while parent != -1:
-            cur_capacity = g.get_capacity(bfs_result[cur].get_parent(), cur)
-            if cur_capacity < min_capacity:
-                min_capacity = cur_capacity
-            cur = parent
-            parent = bfs_result[parent].get_parent()
-
-        return min_capacity
+    return adjusted_bunnies
 
 
 def answer(times, time_limit):
-    graph_from_matrix = Graph.from_adjacency_matrix(times)
-    bfsResult = BFSSolution().run(graph_from_matrix, 0, len(times) - 1)
-    print(f"Max flow = {bfsResult.get_flow(0)}")
+    g = Graph(times)
+
+    if g.V < 3:
+        return []
+
+    maxFreedBunnies = set([])
+    # if g.bellman_ford(0):
+    #     print(g)
+    if g.BellmanFordCompleteSource():
+        # -------- print all distance -----------------
+        # print("shortest distances:")
+        # for row in xrange(g.V):
+        #     print(row, g.distances[row])
+        # print("shortest paths:")
+        # for c in xrange(g.V):
+        #     print(c, g.shortestPath[c])
+        # ---------------------------------------------
+        for freedBunnies in g.get_paths(0, g.V - 1, time_limit):
+            # print freedBunnies
+            # print("result", freedBunnies)
+
+            maxLen = len(maxFreedBunnies)
+            freedLen = len(freedBunnies)
+            if maxLen < freedLen or (maxLen == freedLen and sum(maxFreedBunnies) > sum(freedBunnies)):
+                maxFreedBunnies = freedBunnies
+    else:
+        return [i for i in range(g.V - 2)]
+
+    return get_freed_bunnies(maxFreedBunnies, 0, g.V - 1)
