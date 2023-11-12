@@ -6,7 +6,7 @@
 # from access_code import answer
 # from bunny_prison import answer
 # from running_bunnies import answer
-from running_with_bunnies_4_1 import solution
+from running_with_bunnies_4_2 import solution
 
 if __name__ == '__main__':
     # 1
