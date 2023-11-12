@@ -39,11 +39,6 @@ class Graph:
             for u in range(self.V):
                 for v in range(self.V):
                     self.relax(src, u, v)
-                    # if self.distances[src][u] != self.INF and self.distances[src][u] + self.graph[u][v] < \
-                    #         self.distances[src][v]:
-                    #     # Record this lower distance
-                    #     self.distances[src][v] = self.distances[src][u] + self.graph[u][v]
-                    #     # self.shortestPath[src][v] = v if src == u else u
 
         # Check for negative-weight cycles.  The above step
         # guarantees shortest distances if graph doesn't contain

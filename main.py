@@ -5,8 +5,8 @@
 # from bomb import answer
 # from access_code import answer
 # from bunny_prison import answer
-from running_bunnies import answer
-import datetime
+# from running_bunnies import answer
+from running_with_bunnies_4_1 import solution
 
 if __name__ == '__main__':
     # 1
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     # print(answer(5, 3))
     # print(answer(4, 4))
     # 4.2
-    print(answer([
+    print(solution.answer([
                     [0, 1, 1, 1, 1],
                     [1, 0, 1, 1, 1],
                     [1, 1, 0, 1, 1],
