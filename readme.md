@@ -4,15 +4,24 @@ Welcome to the Foobar Challenge Solutions repository! This project contains my s
 
 ## Repository Structure
 
+### Level 1 questions
 - [braille_translation_1](braille_translation_1)
+
+### Level 2 questions
 - [do_not_get_volunteered_2_1](do_not_get_volunteered_2_1)
 - [en_route_salute_2_2](en_route_salute_2_2)
+
+### Level 3 questions
 - [fuel_injection_perfection_3_1](fuel_injection_perfection_3_1)
 - [bomb_baby_3_2](bomb_baby_3_2)
 - [find_the_access_codes_3_3](find_the_access_codes_3_3)
+
+### Level 4 questions
 - [free_the_bunny_prisoners_4_1](free_the_bunny_prisoners_4_1)
 - [running_with_bunnies_4_2](running_with_bunnies_4_2)
 - [bringing_a_gun_to_a_gourd_fight_4_3](bringing_a_gun_to_a_gourd_fight_4_3)
+
+### others
 - `main.py`: Entry point to run the project.
 
 ## Usage
