@@ -10,6 +10,7 @@ Welcome to the Foobar Challenge Solutions repository! This project contains my s
 
 ### Level 2 questions
 - [do_not_get_volunteered_2_1](do_not_get_volunteered_2_1)
+- [numbers_station_coded_messages_2_1](numbers_station_coded_messages_2_1)
 - [en_route_salute_2_2](en_route_salute_2_2)
 
 ### Level 3 questions
