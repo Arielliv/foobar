@@ -20,6 +20,7 @@ Welcome to the Foobar Challenge Solutions repository! This project contains my s
 ### Level 3 questions
 - [fuel_injection_perfection_3_1](fuel_injection_perfection_3_1)
 - [a_pirate_walks_into_a_bar_3_1](a_pirate_walks_into_a_bar_3_1)
+- [doomsday_fuel_3_1](doomsday_fuel_3_1)
 - [bomb_baby_3_2](bomb_baby_3_2)
 - [queue_to_do_3_2](queue_to_do_3_2)
 - [find_the_access_codes_3_3](find_the_access_codes_3_3)
