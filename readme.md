@@ -27,6 +27,7 @@ Welcome to the Foobar Challenge Solutions repository! This project contains my s
 
 ### Level 4 questions
 - [free_the_bunny_prisoners_4_1](free_the_bunny_prisoners_4_1)
+- [grid_zero_4_1](grid_zero_4_1)
 - [running_with_bunnies_4_2](running_with_bunnies_4_2)
 - [bringing_a_gun_to_a_gourd_fight_4_3](bringing_a_gun_to_a_gourd_fight_4_3)
 

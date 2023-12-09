@@ -12,7 +12,8 @@
 # from numbers_station_coded_messages_2_1 import solution
 # from the_grandest_staircase_of_them_all_3_3 import solution
 # from a_pirate_walks_into_a_bar_3_1 import solution
-from count_connected_components import solution
+# from count_connected_components import solution
+from grid_zero_4_1 import solution
 
 if __name__ == '__main__':
     # 1
@@ -57,14 +58,16 @@ if __name__ == '__main__':
     # 3.1
     # print(solution.answer([1, 3, 0, 1]))
     # print(solution.answer([1, 3, 4, 1, 2]))
-    # Example usage:
-    graph = {
-        0: [1, 2],
-        1: [0, 2],
-        2: [0, 1],
-        3: [4],
-        4: [3]
-    }
-
-    result = solution.count_connected_components(graph)
-    print("Number of connected components:", result)
+    # dfs practice:
+    # graph = {
+    #     0: [1, 2],
+    #     1: [0, 2],
+    #     2: [0, 1],
+    #     3: [4],
+    #     4: [3]
+    # }
+    #
+    # result = solution.count_connected_components(graph)
+    # print("Number of connected components:", result)
+    # 4.1
+    print(solution.answer([[1, 1], [0, 0]]))
