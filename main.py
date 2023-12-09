@@ -14,7 +14,8 @@
 # from a_pirate_walks_into_a_bar_3_1 import solution
 # from count_connected_components import solution
 # from grid_zero_4_1 import solution
-from hey_i_already_did_that_2_1 import solution
+# from hey_i_already_did_that_2_1 import solution
+from solar_doomsday_1 import solution
 
 if __name__ == '__main__':
     # 1
@@ -72,5 +73,7 @@ if __name__ == '__main__':
     # print("Number of connected components:", result)
     # 4.1
     # print(solution.answer([[1, 1], [0, 0]]))
-    #2.1
-    print(solution.answer('210022', 3))
+    # 2.1
+    # print(solution.answer('210022', 3))
+    # 1
+    print(solution.answer(15324))
