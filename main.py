@@ -15,7 +15,8 @@
 # from count_connected_components import solution
 # from grid_zero_4_1 import solution
 # from hey_i_already_did_that_2_1 import solution
-from solar_doomsday_1 import solution
+# from solar_doomsday_1 import solution
+from doomsday_fuel_3_1 import solution
 
 if __name__ == '__main__':
     # 1
@@ -76,4 +77,6 @@ if __name__ == '__main__':
     # 2.1
     # print(solution.answer('210022', 3))
     # 1
-    print(solution.answer(15324))
+    # print(solution.answer(15324))
+    # 3.1
+    print(solution.answer([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]]))
