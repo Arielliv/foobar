@@ -4,6 +4,9 @@ Welcome to the Foobar Challenge Solutions repository! This project contains my s
 
 ## Repository Structure
 
+### Practice
+- [DFS practice - count_connected_components](count_connected_components)
+
 ### Level 1 questions
 - [braille_translation_1](braille_translation_1)
 - [minion_task_scheduling_1](minion_task_scheduling_1)
