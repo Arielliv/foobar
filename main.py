@@ -10,7 +10,8 @@
 # from bringing_a_gun_to_a_gourd_fight_4_3 import solution
 # from minion_task_scheduling_1 import solution
 # from numbers_station_coded_messages_2_1 import solution
-from the_grandest_staircase_of_them_all_3_3 import solution
+# from the_grandest_staircase_of_them_all_3_3 import solution
+from a_pirate_walks_into_a_bar_3_1 import solution
 
 if __name__ == '__main__':
     # 1
@@ -51,4 +52,7 @@ if __name__ == '__main__':
     # 2.1
     # print(solution.answer([7,4,3,5,8], 12))
     # 3.3
-    print(solution.answer(8))
+    # print(solution.answer(8))
+    # 3.1
+    print(solution.answer([1, 3, 0, 1]))
+    print(solution.answer([1, 3, 4, 1, 2]))
