@@ -10,6 +10,7 @@ Welcome to the Foobar Challenge Solutions repository! This project contains my s
 ### Level 1 questions
 - [braille_translation_1](braille_translation_1)
 - [minion_task_scheduling_1](minion_task_scheduling_1)
+- [solar_doomsday_1](solar_doomsday_1)
 
 ### Level 2 questions
 - [do_not_get_volunteered_2_1](do_not_get_volunteered_2_1)
