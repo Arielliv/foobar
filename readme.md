@@ -2,6 +2,9 @@
 
 Welcome to the Foobar Challenge Solutions repository! This project contains my solutions to various challenges from Google's Foobar coding challenges. Feel free to explore the questions and solutions to enhance your problem-solving skills.
 
+<img width="1647" alt="Screenshot 2024-08-07 at 23 45 32" src="https://github.com/user-attachments/assets/e7a0d849-c789-4682-814d-123bf3863e44">
+
+
 ## Repository Structure
 
 ### Practice
