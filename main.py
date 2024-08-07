@@ -16,7 +16,14 @@
 # from grid_zero_4_1 import solution
 # from hey_i_already_did_that_2_1 import solution
 # from solar_doomsday_1 import solution
-from doomsday_fuel_3_1 import solution
+# from doomsday_fuel_3_1 import solution
+
+# from re_id_1_real import solution
+# from do_not_get_volunteered_2_1_real import solution
+# from please_pass_the_coded_messages_2_2_real import solution
+# from find_the_access_codes_3_1_real import solution
+# from the_grandest_staircase_of_them_all_3_2_real import solution
+from doomsday_fuel_3_3_real import solution
 
 if __name__ == '__main__':
     # 1
@@ -79,4 +86,17 @@ if __name__ == '__main__':
     # 1
     # print(solution.answer(15324))
     # 3.1
-    print(solution.answer([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]]))
+    # print(solution.answer([[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]]))
+    # real challenge
+    # 1
+    # print(solution.solution(10000))
+    # 2_1
+    # print(solution.solution(19, 36))
+    # 2_2
+    # print(solution.solution([3, 1, 4, 1, 5, 9]))
+    # 3_1
+    # print(solution.solution([1, 2, 3, 4, 5, 6]))
+    # 3_2
+    # print(solution.solution(200))
+    # 3_3
+    print(solution.solution([[0, 1, 0, 0, 0, 1], [4, 0, 0, 3, 2, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]))
